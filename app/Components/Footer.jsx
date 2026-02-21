@@ -16,9 +16,6 @@ const Footer = () => {
      };
 
      return (
-          <div className="min-h-screen flex flex-col">
-              
-
                <footer className="bg-bg-page border-t border-border-default pt-24 pb-12 px-page-x selection:bg-accent selection:text-text-inverse lg:px-20">
                     <div className="max-w-7xl mx-auto">
                          {/* Top Section: Branding & Links */}
@@ -121,7 +118,6 @@ const Footer = () => {
                          </div>
                     </div>
                </footer>
-          </div>
      );
 };
 

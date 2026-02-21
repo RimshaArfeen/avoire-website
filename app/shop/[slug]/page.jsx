@@ -3,29 +3,24 @@
 
 import React, { useState } from 'react';
 import {
-     ShoppingBag,
      Heart,
      Plus,
      Minus,
-     Search,
      Star,
      ChevronRight,
      ChevronLeft,
      ShieldCheck,
      Truck,
      RotateCcw,
-     Instagram,
-     Twitter,
-     Facebook
 } from 'lucide-react';
 import { perfumes } from '../data';
 import { useParams } from "next/navigation";
 import ShopSection from '@/app/Components/ShopSection';
 import Link from 'next/link';
+import Navbar from '@/app/Components/Navbar';
 
 export default function Page() {
      const { slug } = useParams();
-          const [cartCount, setCartCount] = useState(0);
      const [quantity, setQuantity] = useState(1);
      const [selectedImage, setSelectedImage] = useState(0);
      const [isWishlisted, setIsWishlisted] = useState(false);
@@ -48,39 +43,9 @@ export default function Page() {
 
      return (
           <div className={`min-h-screen ${colors.bg} selection:bg-[#1a1a1a] selection:text-white font-sans ${colors.text}`}>
-               <style>
-                    {`
-          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
-          .font-display { font-family: 'Playfair Display', serif; }
-          .font-sans { font-family: 'Inter', sans-serif; }
-          
-          /* Custom scrollbar for gallery */
-          .no-scrollbar::-webkit-scrollbar { display: none; }
-          .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        `}
-               </style>
+               <Navbar variant="solid" />
 
-               {/* Header */}
-               <header className="sticky top-0 z-50 bg-[#f3eadf]/80 backdrop-blur-md border-b border-[#dccab8]">
-                    <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-                         <div className="flex items-center space-x-8">
-                              <button className="hover:opacity-50"><Search size={20} /></button>
-                              <button className="hidden md:block text-[11px] uppercase tracking-widest font-bold">Collections</button>
-                         </div>
-                         <h1 className="text-2xl font-display tracking-[0.4em] uppercase font-bold cursor-pointer">AVOIRE</h1>
-                         <div className="flex items-center space-x-8">
-                              <button className="hidden md:block text-[11px] uppercase tracking-widest font-bold">Account</button>
-                              <button className="relative group">
-                                   <ShoppingBag size={20} />
-                                   <span className="absolute -top-2 -right-2 bg-[#1a1a1a] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                                        {cartCount}
-                                   </span>
-                              </button>
-                         </div>
-                    </div>
-               </header>
-
-               <main className="max-w-7xl mx-auto px-6 py-12">
+               <main className="max-w-7xl mx-auto px-6 pt-28 pb-12">
                     {/* Breadcrumbs */}
                     <nav className="flex items-center space-x-2 text-[10px] uppercase tracking-widest opacity-40 mb-12">
                          <span>Home</span>
@@ -193,7 +158,7 @@ export default function Page() {
                                         </div>
 
                                         <button
-                                             onClick={() => setCartCount(c => c + quantity)}
+                                             onClick={() => {}}
                                              className="flex-1 h-14 bg-[#1a1a1a] text-white text-[12px] uppercase tracking-[0.4em] font-bold rounded-full hover:bg-black transition-all active:scale-95 shadow-xl shadow-black/10"
                                         >
                                              Add to Shopping Bag

@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --font-primary: var(--font-work-sans);
-  --font-secondary: var(--font-work-sans);
+  --font-primary: var(--font-playfair);
+  --font-secondary: var(--font-inter);
   color-scheme: light;
 
   /* Backgrounds & surfaces */
@@ -86,9 +86,9 @@
    --------------------------------------------------------------------------- */
 
 @theme inline {
-  --font-sans: var(--font-work-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-work-sans), ui-monospace, monospace;
-  --font-headline: var(--font-work-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
+  --font-headline: var(--font-playfair), Georgia, serif;
 
   --font-size-headline-xl: clamp(2rem, 4vw, 3rem);
   --font-size-headline-lg: clamp(1.5rem, 3vw, 2rem);
@@ -148,14 +148,19 @@ html {
 body {
   background-color: var(--bg-page);
   color: var(--text-body);
- font-family: var(--font-secondary), sans-serif;
-   font-size: 1rem;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1rem;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 h1, h2, h3, .logo, .hero-title {
-  font-family: var(--font-primary), sans-serif; /* Headers & special */
+  font-family: var(--font-playfair), Georgia, serif;
+}
+
+.font-display {
+  font-family: var(--font-playfair), Georgia, serif;
 }
 /* Focus visible for keyboard users */
 :focus-visible {
@@ -240,4 +245,19 @@ h1, h2, h3, .logo, .hero-title {
 }
 .animate-shimmer {
   animation: shimmer 1.4s infinite;
+}
+
+/* Product card hover overlay */
+.product-card:hover .description-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hidden scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
