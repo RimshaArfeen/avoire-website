@@ -2,35 +2,35 @@ import { NextResponse } from "next/server";
 import { MongoClient } from "mongodb";
 import { Resend } from "resend";
 
-const client = new MongoClient(process.env.DB_URL);
+const client = new MongoClient(process.env.MONGODB_URI);
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req) {
-     try {
-          const body = await req.json();
-          const { name, email, subject, message } = body;
+  try {
+    const body = await req.json();
+    const { name, email, subject, message } = body;
 
-          if (!name || !email || !message) {
-               return NextResponse.json({ error: "Missing fields" }, { status: 400 });
-          }
+    if (!name || !email || !message) {
+      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    }
 
-          // Save to DB
-          await client.connect();
-          const db = client.db("contactDB");
-          await db.collection("messages").insertOne({
-               name,
-               email,
-               subject,
-               message,
-               createdAt: new Date()
-          });
+    // Save to DB
+    await client.connect();
+    const db = client.db("contactDB");
+    await db.collection("messages").insertOne({
+      name,
+      email,
+      subject,
+      message,
+      createdAt: new Date()
+    });
 
-          // Send Email
-          await resend.emails.send({
-               from: "Avoire Concierge <onboarding@resend.dev>",
-               to: process.env.TO_EMAIL,
-               subject: `New Contact — ${subject || "General"}`,
-               html: `
+    // Send Email
+    await resend.emails.send({
+      from: "Avoire Concierge <onboarding@resend.dev>",
+      to: process.env.TO_EMAIL,
+      subject: `New Contact — ${subject || "General"}`,
+      html: `
   <div style="background:#f3eadf;padding:40px 0;font-family:Inter,Arial,sans-serif;">
     <table align="center" width="600" cellpadding="0" cellspacing="0" style="background:#fffcf9;border:1px solid #dccab8;border-radius:14px;padding:40px;">
       
@@ -73,10 +73,10 @@ export async function POST(req) {
     </table>
   </div>
   `
-          });
+    });
 
-          function field(label, value, block = false) {
-               return `
+    function field(label, value, block = false) {
+      return `
   <tr>
     <td style="padding:12px 0;border-bottom:1px solid #dccab8;">
       <span style="display:block;font-size:11px;letter-spacing:2px;color:#5a5a5a;margin-bottom:6px;">
@@ -88,12 +88,12 @@ export async function POST(req) {
     </td>
   </tr>
   `;
-          }
-          return NextResponse.json({ success: true });
+    }
+    return NextResponse.json({ success: true });
 
-     } catch (err) {
-          return NextResponse.json({ error: err.message }, { status: 500 });
-     } finally {
-          await client.close();
-     }
+  } catch (err) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  } finally {
+    await client.close();
+  }
 }
