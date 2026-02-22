@@ -1,24 +1,13 @@
-
 "use client"
 import React, { useState } from 'react';
 import {
-     ShoppingBag,
      Heart,
-     Plus,
-     Minus,
-     Search,
-     SlidersHorizontal,
      Star,
-     ChevronDown,
-     Instagram,
-     Twitter,
-     Facebook
 } from 'lucide-react';
 import { perfumes } from "./../shop/data.js";
 import { slugify } from '../utils';
 
 const ShopSection = () => {
-       const [cartCount, setCartCount] = useState(0);
        const [wishlist, setWishlist] = useState([]);
        const [quantities, setQuantities] = useState({});
      
@@ -36,19 +25,8 @@ const ShopSection = () => {
      };
 
      return (
-          <div className={`min-h-screen ${colors.bg} selection:bg-[#1a1a1a] selection:text-white font-sans ${colors.text}`}>
-               <style>
-                    {`
-          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
-          .font-display { font-family: 'Playfair Display', serif; }
-          .font-sans { font-family: 'Inter', sans-serif; }
-          .product-card:hover .description-overlay { opacity: 1; transform: translateY(0); }
-        `}
-               </style>
-
-              
-
-               <main className="max-w-7xl mx-auto px-6 py-12">
+          <div className={`${colors.bg} selection:bg-[#1a1a1a] selection:text-white font-sans ${colors.text}`}>
+               <div className="max-w-7xl mx-auto">
                     {/* Editorial Title & Filter Bar */}
                     {/* <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 space-y-8 md:space-y-0">
                          <div>
@@ -113,7 +91,7 @@ const ShopSection = () => {
                                         
 
                                              <button
-                                                  onClick={() => setCartCount(c => c + (quantities[perfume.id] || 1))}
+                                                  onClick={() => {}}
                                                   className="flex-1 h-10 bg-[#1a1a1a] text-white text-[10px] uppercase tracking-[0.2em] font-bold rounded-full hover:bg-black transition-all active:scale-95"
                                              >
                                                   Add to Bag
@@ -125,9 +103,7 @@ const ShopSection = () => {
                     </div>
 
 
-               </main>
-
-
+               </div>
           </div>
      );
 }

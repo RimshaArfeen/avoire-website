@@ -5,16 +5,13 @@
 import React, { useState } from 'react';
 import {
   ShoppingBag,
-  Heart,
   Plus,
   Minus,
   Search,
+  Heart,
   SlidersHorizontal,
   Star,
-  ChevronDown,
-  Instagram,
-  Twitter,
-  Facebook
+  ChevronDown
 } from 'lucide-react';
 
 import AddCart from '../Components/AddCart';
@@ -22,6 +19,7 @@ import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/LikeContext';
 import WishlistBtn from '../Components/WishlistBtn';
 import { useProducts } from "../context/ProdContext";
+import Navbar from '../Components/Navbar';
 
 const App = () => {
   const [cartCount, setCartCount] = useState(0);
@@ -67,36 +65,9 @@ const App = () => {
 
   return (
     <div className={`min-h-screen ${colors.bg} selection:bg-[#1a1a1a] selection:text-white font-sans ${colors.text}`}>
-      <style>
-        {`
-          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
-          .font-display { font-family: 'Playfair Display', serif; }
-          .font-sans { font-family: 'Inter', sans-serif; }
-          .product-card:hover .description-overlay { opacity: 1; transform: translateY(0); }
-        `}
-      </style>
+      <Navbar variant="solid" />
 
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#f3eadf]/80 backdrop-blur-md border-b border-[#dccab8]">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-          <div className="flex items-center space-x-8">
-            <button className="hover:opacity-50"><Search size={20} /></button>
-            <button className="hidden md:block text-[11px] uppercase tracking-widest font-bold">Collections</button>
-          </div>
-          <h1 className="text-2xl font-display tracking-[0.4em] uppercase font-bold">AVOIRE</h1>
-          <div className="flex items-center space-x-8">
-            <button className="hidden md:block text-[11px] uppercase tracking-widest font-bold">Account</button>
-            <button className="relative group">
-              <ShoppingBag size={20} />
-              <span className="absolute -top-2 -right-2 bg-[#1a1a1a] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                {cartCount}
-              </span>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="max-w-7xl mx-auto px-6 pt-28 pb-12">
         {/* Editorial Title & Filter Bar */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 space-y-8 md:space-y-0">
           <div>

@@ -2,11 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-     ShoppingBag,
      Heart,
      Plus,
      Minus,
-     Search,
      Star,
      ChevronRight,
      ChevronLeft,
@@ -59,21 +57,10 @@ export default function Page() {
 
      return (
           <div className={`min-h-screen ${colors.bg} selection:bg-[#1a1a1a] selection:text-white font-sans ${colors.text}`}>
-               {/* Header */}
-               <header className="sticky top-0 z-50 bg-[#f3eadf]/80 backdrop-blur-md border-b border-[#dccab8]">
-                    <div className="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-                         <h1 className="text-2xl font-display tracking-[0.4em] uppercase font-bold cursor-pointer">AVOIRE</h1>
-                         <div className="relative group">
-                              <ShoppingBag size={20} />
-                              <span className="absolute -top-2 -right-2 bg-[#1a1a1a] text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
-                                   {cartItems.length}
-                              </span>
-                         </div>
-                    </div>
-               </header>
+               <Navbar variant="solid" />
 
-               <main className="max-w-7xl mx-auto px-6 py-12">
-                    {/* Breadcrumb */}
+               <main className="max-w-7xl mx-auto px-6 pt-28 pb-12">
+                    {/* Breadcrumbs */}
                     <nav className="flex items-center space-x-2 text-[10px] uppercase tracking-widest opacity-40 mb-12">
                          <span>Home</span>
                          <ChevronRight size={10} />
@@ -89,7 +76,7 @@ export default function Page() {
                                    <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                               </div>
                          </div>
-
+</div>
                          {/* Right: Details */}
                          <div className="lg:col-span-5 space-y-10">
                               <div className="flex justify-between items-start">
@@ -112,6 +99,64 @@ export default function Page() {
                                    <span>{quantity}</span>
                                    <button onClick={() => setQuantity(quantity + 1)}><Plus /></button>
                                    <AddCart onClick={handleAddToCart} />
+                              <section className="space-y-6">
+                                   <p className="text-[#5a5a5a] leading-relaxed font-light text-lg italic">
+                                        {perfume.desc}
+                                   </p>
+
+                                   <div className="space-y-4 pt-4 border-t border-[#dccab8]">
+                                        <details className="group cursor-pointer">
+                                             <summary className="flex justify-between items-center list-none text-[11px] uppercase tracking-[0.2em] font-bold">
+                                                  Composition
+                                                  <Plus size={14} className="group-open:rotate-45 transition-transform" />
+                                             </summary>
+                                             <p className="pt-4 text-xs leading-loose opacity-60 font-sans">{perfume.composition}</p>
+                                        </details>
+                                        <details className="group cursor-pointer">
+                                             <summary className="flex justify-between items-center list-none text-[11px] uppercase tracking-[0.2em] font-bold">
+                                                  How to Wear
+                                                  <Plus size={14} className="group-open:rotate-45 transition-transform" />
+                                             </summary>
+                                             <p className="pt-4 text-xs leading-loose opacity-60 font-sans">{perfume.usage}</p>
+                                        </details>
+                                   </div>
+                              </section>
+
+                              {/* Controls */}
+                              <div className="space-y-6">
+                                   <div className="flex items-center space-x-4">
+                                        <div className="flex items-center border border-[#dccab8] rounded-full p-2 h-14 w-32 justify-between">
+                                             <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-10 h-10 flex items-center justify-center hover:bg-black/5 rounded-full transition-colors">
+                                                  <Minus size={16} />
+                                             </button>
+                                             <span className="font-bold text-lg">{quantity}</span>
+                                             <button onClick={() => setQuantity(quantity + 1)} className="w-10 h-10 flex items-center justify-center hover:bg-black/5 rounded-full transition-colors">
+                                                  <Plus size={16} />
+                                             </button>
+                                        </div>
+
+                                        <button
+                                             onClick={() => {}}
+                                             className="flex-1 h-14 bg-[#1a1a1a] text-white text-[12px] uppercase tracking-[0.4em] font-bold rounded-full hover:bg-black transition-all active:scale-95 shadow-xl shadow-black/10"
+                                        >
+                                             Add to Shopping Bag
+                                        </button>
+                                   </div>
+
+                                   <div className="grid grid-cols-3 gap-4 pt-6 text-[9px] uppercase tracking-widest font-bold text-center opacity-60">
+                                        <div className="space-y-2 flex flex-col items-center">
+                                             <Truck size={18} />
+                                             <span>Free Shipping</span>
+                                        </div>
+                                        <div className="space-y-2 flex flex-col items-center border-x border-[#dccab8]">
+                                             <RotateCcw size={18} />
+                                             <span>30-Day Returns</span>
+                                        </div>
+                                        <div className="space-y-2 flex flex-col items-center">
+                                             <ShieldCheck size={18} />
+                                             <span>Secure Checkout</span>
+                                        </div>
+                                   </div>
                               </div>
                          </div>
                     </div>

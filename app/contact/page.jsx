@@ -2,7 +2,8 @@
 
 "use client"
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Instagram, Twitter, Facebook, ChevronDown } from 'lucide-react';
+import { Mail, MapPin, Send, Instagram, Twitter, Facebook, ChevronDown } from 'lucide-react';
+import Navbar from '../Components/Navbar';
 
 const App = () => {
      const [loading, setLoading] = useState(false)
@@ -51,30 +52,9 @@ const App = () => {
 
      return (
           <div className={`min-h-screen ${colors.bg} selection:bg-[#1a1a1a] selection:text-white font-sans text-[#1a1a1a]`}>
-               {/* Load Fonts and Reset Focus Styles */}
-               <style>
-                    {`
-          @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
-          
-          .font-display { font-family: 'Playfair Display', serif; }
-          .font-sans { font-family: 'Inter', sans-serif; }
+               <Navbar variant="solid" />
 
-          /* Globally remove focus outlines for a custom UI feel */
-          input:focus, textarea:focus, select:focus {
-            outline: none !important;
-            box-shadow: none !important;
-          }
-        `}
-               </style>
-
-               {/* Navigation Branding */}
-               <nav className="p-8 flex justify-center">
-                    <h1 className="text-3xl font-display tracking-[0.3em] uppercase font-bold">
-                         AVOIRE
-                    </h1>
-               </nav>
-
-               <main className="max-w-7xl mx-auto px-6 py-12 md:py-20">
+               <main className="max-w-7xl mx-auto px-6 pt-28 pb-12 md:pt-32 md:pb-20">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
                          {/* Left Side: Editorial Content */}
@@ -235,10 +215,6 @@ const App = () => {
                          </div>
                     </div>
                </main>
-
-               <footer className="mt-20 py-16 border-t border-[#dccab8] text-center">
-                    <p className="text-[10px] tracking-[0.4em] opacity-40 font-bold">EST. 2024 — AVOIRE PARFUMERIE</p>
-               </footer>
           </div>
      );
 };

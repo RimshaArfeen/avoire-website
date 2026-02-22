@@ -16,9 +16,6 @@ const Footer = () => {
      };
 
      return (
-          <div className="min-h-screen flex flex-col">
-              
-
                <footer className="bg-bg-page border-t border-border-default pt-24 pb-12 px-page-x selection:bg-accent selection:text-text-inverse lg:px-20">
                     <div className="max-w-7xl mx-auto">
                          {/* Top Section: Branding & Links */}
@@ -37,6 +34,7 @@ const Footer = () => {
                                         <h3 className="text-caption font-bold tracking-[0.2em] uppercase text-text-primary">The Newsletter</h3>
                                         <div className="relative max-w-sm">
                                              <input
+                                             suppressHydrationWarning
                                                   type="email"
                                                   placeholder="Enter your email"
                                                   className="w-full bg-transparent border-b border-border-strong py-3 text-ui focus:outline-none placeholder:text-text-disabled transition-all focus:border-accent"
@@ -121,7 +119,6 @@ const Footer = () => {
                          </div>
                     </div>
                </footer>
-          </div>
      );
 };
 
