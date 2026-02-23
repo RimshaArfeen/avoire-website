@@ -4,6 +4,7 @@ import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "./Components/Footer";
 import Providers from "./providers";
+import Navbar from "./Components/Navbar/Navbar";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -28,7 +29,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className=" dark">
       <body className={`${playfair.variable} ${inter.variable}`}>
         <Providers>
-          
+          <Navbar/>
           {children}
           <Footer />
         </Providers>

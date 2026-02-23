@@ -10,6 +10,7 @@ import { useCart } from "../context/CartContext";
 import CartCard from "../Components/CartCard";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 
 const CheckoutPage = () => {
      const [step, setStep] = useState(1);
@@ -35,8 +36,8 @@ const CheckoutPage = () => {
      if (status === "loading") return null;
 
      const subtotal = cartItems.reduce((acc, item) => acc + (item.price * (item.qty ?? 1)), 0);
-     const shipping = 0;
-     const total = subtotal + shipping;
+     const shipping = subtotal === 0 ? 0 : subtotal >= 200 ? 0 : 30;
+               const total = subtotal + shipping;
 
      const StepIndicator = ({ number, title, active }) => (
           <div
@@ -48,8 +49,38 @@ const CheckoutPage = () => {
           </div>
      );
 
+     const validateForm = () => {
+          const nameRegex = /^[A-Za-z]{4,}$/;
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          const codeRegex = /^[0-9]+$/;
+
+          if (!nameRegex.test(formData.firstName))
+               return "First name must be letters only and at least 4 characters.";
+          if (!nameRegex.test(formData.lastName))
+               return "Last name must be letters only and at least 4 characters.";
+          if (!emailRegex.test(formData.email))
+               return "Invalid email address.";
+          if (!codeRegex.test(formData.postCode))
+               return "Post code must contain numbers only.";
+          return null;
+     };
      const handlePlaceOrder = async () => {
           setLoading(true);
+          // Run validations
+          
+
+          if (total === 0) {
+               setLoading(false);
+               return Swal.fire({
+                    icon: "warning",
+                    title: "Your cart is empty",
+                    text: "Add something before placing order.",
+                    confirmButtonText: "Go to Shop",
+                    confirmButtonColor: "#000"
+               }).then(() => router.push("/shop"));
+          }
+         
+          
           try {
                const orderData = {
                     items: cartItems.map(i => ({
@@ -68,7 +99,10 @@ const CheckoutPage = () => {
                          country: formData.country
                     }
                };
-
+               if (!formData.firstName || !formData.address || !formData.city) {
+                    setLoading(false);
+                    return Swal.fire("Missing info", "Please fill shipping details", "warning");
+               }
                const res = await fetch("/api/orders/create", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -78,8 +112,16 @@ const CheckoutPage = () => {
                const result = await res.json();
 
                if (result.success) {
+                    await Swal.fire({
+                         icon: "success",
+                         title: "Order Placed!",
+                         text: "Your order has been placed successfully.",
+                         confirmButtonColor: "#000",
+                         confirmButtonText: "Continue Shopping"
+                    });
+
                     clearCart();
-                    setSuccessMsg("Order placed successfully ✨");
+                    router.push("/");
                     setStep(1);
                     setFormData({ firstName: "", lastName: "", email: "", address: "", city: "", postCode: "", country: "Pakistan" });
                } else {
@@ -87,40 +129,43 @@ const CheckoutPage = () => {
                }
           } catch (err) {
                console.error(err);
-               setSuccessMsg("Server error. Try again.");
-          } finally {
+               Swal.fire({
+                    icon: "error",
+                    title: "Server Error",
+                    text: "Something went wrong. Please try again."
+               });
+          }        
+               finally {
                setLoading(false);
           }
      };
 
+     if (total === 0) {
+return(
+          <div className="min-h-screen flex flex-col items-center justify-center text-center space-y-6">
+               <ShoppingBag size={60} className="opacity-40" />
+               <h2 className="text-2xl font-headline">Your cart is empty</h2>
+               <p className="text-text-muted">Add something to your cart to continue</p>
+
+               <Link
+                    href="/shop"
+                    className="px-10 h-14 flex items-center justify-center rounded-full bg-accent text-text-inverse uppercase tracking-widest text-sm font-bold hover:bg-accent-hover transition"
+               >
+                    Go to Shop
+               </Link>
+          </div>
+
+)
+
+     }
      return (
           <div
-               className="min-h-screen bg-bg-page font-sans text-text-primary selection:bg-accent">
-               {/* Header */}
-               <header
-                    className="border-b border-border-default bg-bg-page/80 backdrop-blur-md sticky top-0 z-50">
-                    <div
-                         className="max-w-7xl mx-auto px-page-x h-20 flex justify-between items-center">
-                         <Link href="/cart"
-                              className="flex items-center space-x-2 text-[10px] font-bold tracking-widest uppercase hover:opacity-50 transition-opacity">
-                              <ChevronLeft size={14} />
-                              <span>Back to Bag</span>
-                         </Link>
-                         <h1
-                              className="text-xl font-headline tracking-[0.4em] uppercase font-bold">AVOIRE</h1>
-                         <div
-                              className="flex items-center space-x-2 text-text-muted">
-                              <Lock size={14} />
-                              <span
-                                   className="text-[10px] font-bold tracking-widest uppercase">Secure</span>
-                         </div>
-                    </div>
-               </header>
-
+               className="min-h-screen bg-bg-page font-sans text-text-primary selection:bg-accent py-24">
+      
                <main
-                    className="max-w-7xl mx-auto px-page-x py-16 lg:py-24">
+                    className=" w-full mx-auto px-page-x py-16 lg:py-24">
                     <div
-                         className="grid grid-cols-1 lg:grid-cols-12 gap-20">
+                         className="grid grid-cols-1  lg:flex lg:flex-row justify-around gap-20">
                          {/* Left: Forms */}
                          <div
                               className="lg:col-span-7 space-y-12">
@@ -157,7 +202,14 @@ const CheckoutPage = () => {
                                              className="w-full bg-bg-card border border-border-default rounded-lg px-4 py-3" />
                                    </div>
                                    {step === 1 && (
-                                        <button onClick={() => setStep(2)}
+                                        <button onClick={() => {
+                                             const errorMsg = validateForm();
+                                             if (errorMsg) {
+                                                  setLoading(false);
+                                                  return Swal.fire("Invalid input", errorMsg, "warning");
+                                             }
+                                             setStep(2)}
+                                        }
                                              className="mt-12 w-full md:w-auto px-12 h-14 bg-accent text-text-inverse rounded-full font-bold uppercase tracking-[0.2em] text-[11px] hover:bg-accent-hover transition-all">
                                              Continue to Payment
                                         </button>
@@ -197,8 +249,11 @@ const CheckoutPage = () => {
                               {/* Step 3: Review */}
                               <section
                                    className={step < 3 ? "hidden" : ""}>
-                                   {successMsg && <div
-                                        className="mb-6 p-4 rounded-lg bg-green-50 text-green-700 text-sm font-semibold">{successMsg}</div>}
+                                   {subtotal < 200 && (
+                                        <Link href="/shop" className="w-full h-16 mb-8  bg-accent text-text-inverse rounded-full font-bold uppercase tracking-[0.3em] text-[12px] flex items-center justify-center shadow-xl shadow-accent/10 hover:bg-accent-active transition-all">
+                                             Add ${(200 - subtotal).toFixed(2)} more for free shipping
+                                        </Link>
+                                   )}
                                    <button onClick={handlePlaceOrder}
                                         className="w-full h-16 bg-accent text-text-inverse rounded-full font-bold uppercase tracking-[0.3em] text-[12px] flex items-center justify-center shadow-xl shadow-accent/10 hover:bg-accent-active transition-all">
                                         {loading ? "Processing..." : `Pay $${total.toFixed(2)} — Place Order`}
@@ -207,8 +262,13 @@ const CheckoutPage = () => {
                          </div>
 
                          {/* Right: Order Summary */}
-                         <CartCard subtotal={subtotal.toFixed(2)} total={total.toFixed(2)} />
-                    </div>
+                         <CartCard
+                              cartItems={cartItems}
+                              subtotal={subtotal.toFixed(2)}
+                              shipping={shipping.toFixed(2)}
+                              total={total.toFixed(2)}
+                         />                   
+                         </div>
                </main>
           </div>
      );

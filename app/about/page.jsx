@@ -20,8 +20,7 @@ const milestones = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#f3eadf] text-[#1a1a1a] font-sans selection:bg-[#1a1a1a] selection:text-white">
-      <Navbar variant="transparent" />
+    <div className="min-h-screen bg-[#f3eadf] text-[#1a1a1a] font-sans selection:bg-[#1a1a1a] selection:text-white py-24">
 
       {/* ─── Hero ─── */}
       <section className="relative h-[85vh] min-h-[560px] flex items-center justify-center overflow-hidden">
@@ -64,7 +63,7 @@ export default function AboutPage() {
           <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-[#dccab8] to-[#cbb49e]">
               <img
-                src="/images/founder.jpg"
+                src="/shop.jpg"
                 alt="The Avoire founder"
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -140,7 +139,7 @@ export default function AboutPage() {
             <div className="relative overflow-hidden min-h-[420px] lg:min-h-[640px]">
               <div className="absolute inset-0 bg-gradient-to-br from-[#e6d7c8] to-[#cbb49e]">
                 <img
-                  src="/images/craft.jpg"
+                  src="/perfumeBlending.jpg"
                   alt="The art of perfume blending"
                   className="w-full h-full object-cover"
                   onError={(e) => {
@@ -222,7 +221,7 @@ export default function AboutPage() {
             <div className="relative overflow-hidden min-h-[420px] lg:min-h-[640px] order-1 lg:order-2">
               <div className="absolute inset-0 bg-gradient-to-bl from-[#dccab8] to-[#cbb49e]">
                 <img
-                  src="/images/experience.jpg"
+                  src="/fragrance.jpg"
                   alt="The Avoire fragrance experience"
                   className="w-full h-full object-cover"
                   onError={(e) => {

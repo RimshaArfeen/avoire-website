@@ -31,7 +31,7 @@ export async function POST(req) {
       to: process.env.TO_EMAIL,
       subject: `New Contact — ${subject || "General"}`,
       html: `
-  <div style="background:#f3eadf;padding:40px 0;font-family:Inter,Arial,sans-serif;">
+  <div style="background:#f3eadf;padding:40px 0;>
     <table align="center" width="600" cellpadding="0" cellspacing="0" style="background:#fffcf9;border:1px solid #dccab8;border-radius:14px;padding:40px;">
       
       <!-- Header -->

@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { useWishlist } from "@/app/context/LikeContext";
 import AddCart from '../Components/AddCart';
 import { useCart } from '../context/CartContext';
+import ShopSection from '../Components/ShopSection';
 
 const page = () => {
      const [itemQuantity, setItemQuantity] = useState(1);
@@ -32,26 +33,9 @@ const page = () => {
      };
 
      return (
-          <div className="min-h-screen bg-bg-page font-sans text-text-primary selection:bg-accent">
-               {/* Navigation Header */}
-               <header className="border-b border-border-default bg-bg-page/80 backdrop-blur-md sticky top-0 z-50">
-                    <div className="max-w-7xl mx-auto px-page-x h-20 flex justify-between items-center">
-                         <button className="flex items-center space-x-2 text-[10px] font-bold tracking-widest uppercase hover:opacity-50 transition-opacity">
-                              <ChevronLeft size={14} />
-                              <span>Back to Shop</span>
-                         </button>
-                         <h1 className="text-xl font-headline tracking-[0.4em] uppercase font-bold">AVOIRE</h1>
-                         <div className="flex items-center space-x-6">
-                              <button className="hover:opacity-60 transition-opacity">
-                                   <Share2 size={18} />
-                              </button>
-                              <div className="relative">
-                                   <ShoppingBag size={18} />
-                                   <span className="absolute -top-2 -right-2 w-4 h-4 bg-accent text-text-inverse text-[8px] flex items-center justify-center rounded-full font-bold">2</span>
-                              </div>
-                         </div>
-                    </div>
-               </header>
+          <div className="min-h-screen bg-bg-page font-sans text-text-primary selection:bg-accent py-24">
+             
+              
 
                <main className="max-w-7xl mx-auto px-page-x py-16 lg:py-24">
                     {/* Page Title Section */}
@@ -79,25 +63,28 @@ const page = () => {
                                    <div key={item.id} className="group relative">
                                         {/* Image Container */}
                                         <div className="aspect-[4/5] bg-bg-card border border-border-default rounded-2xl overflow-hidden relative flex items-center justify-center transition-all duration-500 group-hover:shadow-2xl group-hover:shadow-accent/5">
-                                             {/* Backdrop minimalist bottle sketch */}
-                                             <div className="w-16 h-28 border-2 border-accent/5 rounded-t-xl rounded-b-md relative">
-                                                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full w-6 h-4 border-2 border-accent/5 rounded-sm" />
-                                             </div>
+
+                                             {/* Product Image */}
+                                             <img
+                                                  src={`/${item.images?.[0]}`}
+                                                  alt={item.name}
+                                                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                             />
 
                                              {/* Actions Overlay */}
-                                             <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                             <div className="absolute inset-0 bg-accent/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                                             {/* <button
-                                                  onClick={() => removeItem(item.id)}
-                                                  className="absolute top-4 right-4 p-2 bg-white/80 backdrop-blur-sm border border-border-subtle rounded-full text-text-primary hover:bg-red-50 hover:text-red-500 hover:border-red-200 transition-all z-10"
-                                             >
-                                                  <X size={16} />
-                                             </button> */}
-
-                                             <div className="absolute bottom-6 left-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                                                  <div className="w-full bg-accent text-text-inverse rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center justify-center space-x-2 shadow-lg">
+                                             {/* Add to Cart & Remove buttons */}
+                                             <div className="absolute bottom-6 left-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 flex flex-col gap-2">
+                                                  <div className="w-full hover:cursor-pointer bg-accent text-text-inverse rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center justify-center space-x-2 shadow-lg">
                                                        <AddCart onClick={() => handleAddToCart(item)} />
                                                   </div>
+                                                  <button
+                                                       className="w-full hover:cursor-pointer bg-red-700 p-2 text-text-inverse rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center justify-center space-x-2 shadow-lg"
+                                                       onClick={() => removeFromWishlist(item.id)}
+                                                  >
+                                                       Remove
+                                                  </button>
                                              </div>
                                         </div>
 
@@ -148,21 +135,7 @@ const page = () => {
                     {/* Recommendations Section */}
                     <section className="mt-32 pt-16 border-t border-border-default">
                          <h3 className="text-caption font-bold tracking-[0.3em] uppercase mb-12 text-center">You might also desire</h3>
-                         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                              {[1, 2, 3, 4].map((i) => (
-                                   <div key={i} className="space-y-4 text-center group">
-                                        <div className="aspect-square bg-bg-surface rounded-xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700">
-                                             <div className="w-full h-full flex items-center justify-center opacity-20">
-                                                  <div className="w-4 h-12 border border-text-primary rounded-sm" />
-                                             </div>
-                                        </div>
-                                        <div>
-                                             <h4 className="text-[10px] font-bold uppercase tracking-widest">Le Blanc {i}</h4>
-                                             <p className="text-caption text-text-muted">$180</p>
-                                        </div>
-                                   </div>
-                              ))}
-                         </div>
+                         <ShopSection />
                     </section>
                </main>
 

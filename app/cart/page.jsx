@@ -32,9 +32,8 @@ const Page = () => {
           (acc, item) => acc + (item.price * (item.qty ?? 1)),
           0
      );
-     const shipping = 0;
+     const shipping = subtotal === 0 ? 0 : subtotal >= 200 ? 0 : 30;
      const total = subtotal + shipping;
-
      return (
           <div className="min-h-screen bg-bg-page font-sans text-text-primary selection:bg-accent selection:text-text-inverse py-24">
                <main className="max-w-7xl mx-auto px-page-x py-16">
@@ -50,13 +49,20 @@ const Page = () => {
                               <div className="lg:col-span-8 space-y-8">
                                    {cartItems.map((item) => (
                                         <div
-                                             key={item._id}
+                                              key={item._id}
                                              className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center py-8 border-b border-border-subtle group"
                                         >
                                              {/* Product Info */}
-                                             <div className="col-span-1 md:col-span-6 flex items-center space-x-6">
+                                             <div className="col-span-1 md:col-span-6 flex items-center space-x-6 group">
+                                                  {/* Image Container */}
                                                   <div className="w-24 h-32 bg-bg-card border border-border-default rounded-xl flex items-center justify-center flex-shrink-0 relative overflow-hidden">
-                                                       <div className="w-8 h-12 border border-accent/10 rounded-t-lg rounded-b-sm" />
+                                                       <img
+                                                            src={`/${item.images?.[0]}`} // <-- actual product image
+                                                            alt={item.name}
+                                                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                       />
+
+                                                       {/* Remove Button */}
                                                        <button
                                                             onClick={() => removeFromCart(item._id)}
                                                             className="absolute top-2 left-2 p-1.5 bg-white border border-border-default rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-50 hover:border-red-200 text-red-500"
@@ -64,19 +70,21 @@ const Page = () => {
                                                             <X size={12} />
                                                        </button>
                                                   </div>
+
+                                                  {/* Product Details */}
                                                   <div className="space-y-1">
                                                        <p className="text-[10px] uppercase tracking-widest font-bold text-text-muted">
                                                             {item.note}
                                                        </p>
                                                        <h3 className="text-xl font-headline">{item.name}</h3>
                                                        <p className="text-ui text-text-muted font-light">
-                                                            {item.size} — {item.image}
+                                                            {item.size}
                                                        </p>
-                                                       <div className="flex items-center space-x-4 pt-2">
+                                                       {/* <div className="flex items-center space-x-4 pt-2">
                                                             <button className="text-[10px] uppercase tracking-widest font-bold text-text-disabled hover:text-accent transition-colors flex items-center gap-1">
                                                                  <Heart size={12} /> Save for later
                                                             </button>
-                                                       </div>
+                                                       </div> */}
                                                   </div>
                                              </div>
 
@@ -124,9 +132,12 @@ const Page = () => {
                               </div>
 
                               {/* Right: Summary Box */}
-                              <CartCard subtotal={subtotal.toFixed(2)} 
-                              total={total.toFixed(2)} />
-                              
+                                   <CartCard
+                                        cartItems={cartItems}
+                                        subtotal={subtotal.toFixed(2)}
+                                        shipping={shipping.toFixed(2)}
+                                        total={total.toFixed(2)}
+                                   />
                          </div>
                          </>
                     ) : (

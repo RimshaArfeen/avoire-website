@@ -4,11 +4,11 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative h-min-screen flex items-center justify-center overflow-hidden py-32 ">
       {/* Background — gradient acts as elegant fallback when no image is present */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#1a1a1a] via-[#2a2018] to-[#0d0d0d]">
         <img
-          src="/images/hero.jpg"
+          src="/avoire.jpg"
           alt=""
           className="w-full h-full object-cover opacity-30 mix-blend-luminosity"
           onError={(e) => {

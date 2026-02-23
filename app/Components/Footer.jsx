@@ -1,125 +1,168 @@
 "use client"
-import React from 'react';
+import React, { useState } from 'react';
 import {
      Instagram,
      Twitter,
      Facebook,
-     ArrowRight
+     ArrowRight,
+     Globe,
+     CreditCard
 } from 'lucide-react';
 
+/**
+ * Avoire a Perfume - Senior UI/UX Footer Component
+ * Updated with internal routing links: Home, About, Shop, Product, and Contact.
+ */
 const Footer = () => {
-     // Using the semantic color tokens provided in your globals.css
+     const [email, setEmail] = useState('');
+
+     const handleSubmit = (e) => {
+          e.preventDefault();
+          console.log('Subscribed:', email);
+          setEmail('');
+     };
+
      const footerLinks = {
-          collections: ["Limited Edition", "The Classics", "Travel Sets", "Sample Kits"],
-          company: ["Our Story", "The Atelier", "Sustainability", "Careers"],
-          support: ["Shipping & Returns", "Contact Us", "FAQ", "Store Locator"]
+          navigation: [
+               { label: 'Home', href: '/' },
+               { label: 'About Us', href: '/about' },
+               { label: 'Shop All', href: '/shop' },
+               { label: 'Contact Us', href: '/contact-us' },
+          ],
+          collections: [
+               { label: 'Ocean Whisper', href: '/shop/ocean-whisper' },
+               { label: 'Spice Mirage', href: '/shop/spice-mirage' },
+               { label: 'Rose Elixir', href: '/shop/rose-elixir' },
+               { label: 'Velvet Amber', href: '/shop/velvet-amber' },
+          ],
+          legal: [
+               { label: 'Privacy Policy', href: '/privacy' },
+               { label: 'Terms of Service', href: '/terms-of-service' },
+               // { label: 'Accessibility', href: '#' },
+          ],
      };
 
      return (
-               <footer className="bg-bg-page border-t border-border-default pt-24 pb-12 px-page-x selection:bg-accent selection:text-text-inverse lg:px-20">
-                    <div className="max-w-7xl mx-auto">
-                         {/* Top Section: Branding & Links */}
-                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-16 lg:gap-8 mb-24">
+          <footer className="bg-accent text-text-inverse pt-20 pb-10 px-page-x font-sans">
+               <div className="max-w-7xl mx-auto">
 
-                              {/* Column 1: Brand & Newsletter (4 cols) */}
-                              <div className="lg:col-span-4 space-y-10">
-                                   <div className="space-y-4">
-                                        <h2 className="text-2xl font-headline tracking-[0.4em] uppercase font-bold text-text-primary">AVOIRE</h2>
-                                        <p className="text-body-sm text-text-muted max-w-xs font-light leading-relaxed">
-                                             Crafting sensory experiences through rare essences. Designed in Paris, inspired by the world.
-                                        </p>
-                                   </div>
+                    {/* Top Section: Newsletter & Brand Identity */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16 border-b border-white/10">
 
-                                   <div className="space-y-6">
-                                        <h3 className="text-caption font-bold tracking-[0.2em] uppercase text-text-primary">The Newsletter</h3>
-                                        <div className="relative max-w-sm">
-                                             <input
-                                             suppressHydrationWarning
-                                                  type="email"
-                                                  placeholder="Enter your email"
-                                                  className="w-full bg-transparent border-b border-border-strong py-3 text-ui focus:outline-none placeholder:text-text-disabled transition-all focus:border-accent"
-                                             />
-                                             <button className="absolute right-0 bottom-3 hover:translate-x-1 transition-transform text-accent">
-                                                  <ArrowRight size={18} />
-                                             </button>
-                                        </div>
-                                        <p className="text-[10px] text-text-disabled uppercase tracking-widest leading-relaxed">
-                                             Join our list for exclusive releases and scent stories.
-                                        </p>
-                                   </div>
+                         {/* Brand Info */}
+                         <div className="lg:col-span-5 flex flex-col justify-between">
+                              <div className="space-y-6">
+                                   <h2 className="text-headline-lg font-headline tracking-tight uppercase">
+                                        Avoire <span className="font-light italic">a Perfume</span>
+                                   </h2>
+                                   <p className="text-body-sm max-w-md text-white/70 leading-relaxed">
+                                        Crafting olfactory poetry since 1924. Each bottle of Avoire is a
+                                        symphony of rare botanicals and timeless elegance, designed to
+                                        linger in memory as much as on skin.
+                                   </p>
                               </div>
 
-                              {/* Link Columns (6 cols total) */}
-                              <div className="lg:col-span-6 grid grid-cols-2 md:grid-cols-3 gap-8">
-                                   <div className="space-y-6">
-                                        <h3 className="text-caption font-bold tracking-[0.2em] uppercase text-text-primary">Collections</h3>
-                                        <ul className="space-y-4">
-                                             {footerLinks.collections.map(link => (
-                                                  <li key={link}>
-                                                       <a href="#" className="text-ui text-text-muted hover:text-accent transition-colors nav-link-underline">{link}</a>
-                                                  </li>
-                                             ))}
-                                        </ul>
-                                   </div>
-
-                                   <div className="space-y-6">
-                                        <h3 className="text-caption font-bold tracking-[0.2em] uppercase text-text-primary">Maison</h3>
-                                        <ul className="space-y-4">
-                                             {footerLinks.company.map(link => (
-                                                  <li key={link}>
-                                                       <a href="#" className="text-ui text-text-muted hover:text-accent transition-colors nav-link-underline">{link}</a>
-                                                  </li>
-                                             ))}
-                                        </ul>
-                                   </div>
-
-                                   <div className="space-y-6">
-                                        <h3 className="text-caption font-bold tracking-[0.2em] uppercase text-text-primary">Help</h3>
-                                        <ul className="space-y-4">
-                                             {footerLinks.support.map(link => (
-                                                  <li key={link}>
-                                                       <a href="#" className="text-ui text-text-muted hover:text-accent transition-colors nav-link-underline">{link}</a>
-                                                  </li>
-                                             ))}
-                                        </ul>
-                                   </div>
-                              </div>
-
-                              {/* Social Column (2 cols) */}
-                              <div className="lg:col-span-2 space-y-6">
-                                   <h3 className="text-caption font-bold tracking-[0.2em] uppercase text-text-primary">Connect</h3>
-                                   <div className="flex lg:flex-col gap-6">
-                                        <a href="#" className="flex items-center gap-3 text-ui text-text-muted hover:text-accent transition-all group">
-                                             <Instagram size={18} />
-                                             <span className="hidden lg:block nav-link-underline">Instagram</span>
-                                        </a>
-                                        <a href="#" className="flex items-center gap-3 text-ui text-text-muted hover:text-accent transition-all group">
-                                             <Twitter size={18} />
-                                             <span className="hidden lg:block nav-link-underline">Twitter</span>
-                                        </a>
-                                        <a href="#" className="flex items-center gap-3 text-ui text-text-muted hover:text-accent transition-all group">
-                                             <Facebook size={18} />
-                                             <span className="hidden lg:block nav-link-underline">Facebook</span>
-                                        </a>
-                                   </div>
+                              <div className="mt-8 flex gap-5">
+                                   <SocialIcon Icon={Instagram} />
+                                   <SocialIcon Icon={Twitter} />
+                                   <SocialIcon Icon={Facebook} />
                               </div>
                          </div>
 
-                         {/* Bottom Bar */}
-                         <div className="pt-12 border-t border-border-subtle flex flex-col md:flex-row justify-between items-center gap-6">
-                              <div className="flex gap-8 text-[10px] uppercase tracking-[0.2em] font-bold text-text-disabled">
-                                   <span>&copy; 2024 AVOIRE PARFUMS</span>
-                                   <a href="#" className="hover:text-accent transition-colors">Privacy Policy</a>
-                                   <a href="#" className="hover:text-accent transition-colors">Terms of Service</a>
-                              </div>
+                         
+                    </div>
 
-                              <div className="flex items-center gap-4 text-text-disabled">
-                                   <span className="text-[10px] uppercase tracking-[0.3em] font-bold">FR / EN</span>
+                    {/* Middle Section: Navigation */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 py-16 text-sm md:text-lg">
+                         <FooterColumn title="Explore" links={footerLinks.navigation} />
+                         <FooterColumn title="Collections" links={footerLinks.collections} />
+
+                         <div className="space-y-6">
+                              <h4 className="text-ui font-headline uppercase tracking-widest text-white/40">Visit Us</h4>
+                              <div className="space-y-4">
+                                   <p className="text-body-sm text-white/70">
+                                        1600 Pennsylvania Ave NW<br /> Washington, DC, United States
+                                   </p>
+                                   <a
+                                        href="https://www.google.com/maps?q=1600+Pennsylvania+Ave+NW,+Washington,+DC"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-body-sm text-white/70 hover:text-white transition-colors underline underline-offset-4"
+                                   >
+                                        View on Map
+                                   </a>
+                              </div>
+                         </div>
+
+                         <div className="space-y-6">
+                              <h4 className="text-ui font-headline uppercase tracking-widest text-white/40">Concierge</h4>
+                              <div className="space-y-4">
+                                   <p className="text-body-sm text-white/70">
+                                        concierge@avoire.com
+                                   </p>
+                                   <p className="text-body-sm text-white/70">
+                                        +33 (0) 1 42 25 00 00
+                                   </p>
+                                   <a href="/contact" className="text-body-sm text-white/70 hover:text-white transition-colors block">
+                                        Customer Support
+                                   </a>
                               </div>
                          </div>
                     </div>
-               </footer>
+
+                    {/* Bottom Bar: Legals & Regional */}
+                    <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
+                         <div className="flex flex-wrap justify-center md:justify-start gap-x-8 gap-y-2">
+                              <span className="text-caption text-white/40">© 2024 Avoire a Perfume.</span>
+                              {footerLinks.legal.map((link, idx) => (
+                                   <a key={idx} href={link.href} className="text-caption text-white/40 hover:text-white transition-colors underline-offset-4 hover:underline">
+                                        {link.label}
+                                   </a>
+                              ))}
+                         </div>
+
+                         {/* <div className="flex items-center gap-6">
+                              <div className="flex items-center gap-2 text-caption text-white/60 hover:text-white transition-colors cursor-pointer">
+                                   <Globe size={14} />
+                                   <span>International (EN)</span>
+                              </div>
+                              {/* <div className="flex gap-3 text-white/30">
+                                   <CreditCard size={20} strokeWidth={1.5} />
+                                   <div className="w-8 h-5 bg-white/10 rounded-sm" />
+                                   <div className="w-8 h-5 bg-white/10 rounded-sm" />
+                              </div> 
+                         </div> */}
+                    </div>
+               </div>
+          </footer>
      );
 };
+
+const FooterColumn = ({ title, links }) => (
+     <div className="space-y-6">
+          <h4 className="text-ui font-headline uppercase tracking-widest text-white/40">{title}</h4>
+          <ul className="space-y-3">
+               {links.map((link, idx) => (
+                    <li key={idx}>
+                         <a
+                              href={link.href}
+                              className="text-body-sm text-white/70 hover:text-white transition-colors block nav-link-underline w-fit"
+                         >
+                              {link.label}
+                         </a>
+                    </li>
+               ))}
+          </ul>
+     </div>
+);
+
+const SocialIcon = ({ Icon }) => (
+     <a
+          href="#"
+          className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-accent transition-all duration-300 group"
+     >
+          <Icon size={18} className="group-hover:scale-110 transition-transform" />
+     </a>
+);
 
 export default Footer;

@@ -7,30 +7,30 @@ export const WishListProvider = ({ children }) => {
   const [likedItems, setLikedItems] = useState([]);
   const [total_items, setTotal_items] = useState(0);
 
-  // const addToWishlist = (product, qty = 1) => {
-  //   setLikedItems((prev) => {
-  //     const exists = prev.find((item) => item.id === product.id);
-
-  //     if (exists) {
-  //       return prev.map((item) =>
-  //         item.id === product.id ? { ...item, qty: item.qty + qty } : item
-  //       );
-  //     }
-  //     return [...prev, { ...product, qty }];
-  //   });
-  // };
-//act as toggle like btn
-  const addToWishlist = (product) => {
-    setLikedItems(prev => {
-      const exists = prev.find(item => item.id === product.id);
+  const addToWishlist = (product, qty = 1) => {
+    setLikedItems((prev) => {
+      const exists = prev.find((item) => item.id === product.id);
 
       if (exists) {
-        return prev.filter(item => item.id !== product.id); // remove if already exists
+        return prev.map((item) =>
+          item.id === product.id ? { ...item, qty: item.qty + qty } : item
+        );
       }
-
-      return [...prev, product];
+      return [...prev, { ...product, qty }];
     });
   };
+// act as toggle like btn
+  // const addToWishlist = (product) => {
+  //   setLikedItems(prev => {
+  //     const exists = prev.find(item => item.id === product.id);
+
+  //     if (exists) {
+  //       return prev.filter(item => item.id !== product.id); // remove if already exists
+  //     }
+
+  //     return [...prev, product];
+  //   });
+  // };
   const removeFromWishlist = (id) => {
   setLikedItems((prev) => prev.filter((item) => item.id !== id));
 };

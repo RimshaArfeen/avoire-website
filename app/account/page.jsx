@@ -90,23 +90,8 @@ const AccountPage = () => {
      );
 
      return (
-          <div className="min-h-screen bg-bg-page font-sans text-text-primary selection:bg-accent">
-               {/* Account Header */}
-               <header className="border-b border-border-default bg-bg-page/80 backdrop-blur-md sticky top-0 z-50">
-                    <div className="max-w-7xl mx-auto px-page-x h-20 flex justify-between items-center">
-                         <button className="flex items-center space-x-2 text-[10px] font-bold tracking-widest uppercase hover:opacity-50 transition-opacity">
-                              <ChevronLeft size={14} />
-                              <span>Back to Shop</span>
-                         </button>
-                         <h1 className="text-xl font-headline tracking-[0.4em] uppercase font-bold">AVOIRE</h1>
-                         <div className="flex items-center space-x-4">
-                              <div className="w-8 h-8 rounded-full bg-accent text-text-inverse flex items-center justify-center text-[10px] font-bold">
-                                   {profile.name?.split(' ').map(n => n[0]).join('') || 'JS'}
-                              </div>
-                         </div>
-                    </div>
-               </header>
-
+          <div className="min-h-screen bg-bg-page font-sans text-text-primary selection:bg-accent py-24">
+              
                <main className="max-w-7xl mx-auto px-page-x py-16 lg:py-24">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
 

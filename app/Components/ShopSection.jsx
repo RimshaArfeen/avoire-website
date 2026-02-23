@@ -4,14 +4,14 @@ import {
      Heart,
      Star,
 } from 'lucide-react';
-import { perfumes } from "./../shop/data.js";
+import { useProducts } from "@/app/context/ProdContext"; 
 import { slugify } from '../utils';
 
 const ShopSection = () => {
        const [wishlist, setWishlist] = useState([]);
        const [quantities, setQuantities] = useState({});
-     
-
+     const { products } = useProducts();
+     if (!products.length) return <p className="p-10">Loading products...</p>;
      const toggleWishlist = (id) => {
           setWishlist(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
      };
@@ -44,7 +44,7 @@ const ShopSection = () => {
 
                     {/* Product Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16">
-                         {perfumes.slice(0,4)
+                         {products.slice(0,4)
                          .map((perfume) => (
                               <div key={perfume.id} className="group product-card">
                                    {/* Image Container with Hover Overlay */}
@@ -52,7 +52,7 @@ const ShopSection = () => {
                                         {/* Placeholder for Bottle Image */}
                                         <div className="absolute inset-0">
                                              <img
-                                                  src={perfume.image}
+                                                  src={`/${perfume.images?.[0]}`}
                                                   alt={perfume.name}
                                                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                              />
@@ -67,9 +67,9 @@ const ShopSection = () => {
                                         </button>
 
                                         {/* Description Overlay */}
-                                        <div className="description-overlay absolute inset-0 bg-black/80 text-white p-8 flex flex-col justify-end opacity-0 transform translate-y-4 transition-all duration-500 pointer-events-none">
+                                        <div className="description-overlay absolute inset-0 bg-black/80 text-white p-8 flex flex-col justify-end opacity-0 transform translate-y-0 transition-all duration-500 pointer-events-none">
                                              <p className="text-sm font-light leading-relaxed italic">
-                                                  "{perfume.shortDesc}"
+                                                  "{perfume.shortDescription}"
                                              </p>
                                              <div className="mt-4 flex space-x-1">
                                                   {[1, 2, 3, 4, 5].map(s => <Star key={s} size={10} fill="white" />)}

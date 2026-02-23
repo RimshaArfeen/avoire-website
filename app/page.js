@@ -9,11 +9,15 @@ import {
   FlaskConical,
   Leaf,
 } from "lucide-react";
-import Navbar from "./Components/Navbar";
+import {
+  Quote,
+  Instagram,
+  ArrowUpRight
+} from 'lucide-react';
 import Hero from "./Components/Hero";
-import { perfumes } from "./shop/data";
 import { slugify } from "./utils";
-
+import ShopSection from "./Components/ShopSection";
+import { useProducts } from "./context/ProdContext";
 export default function Home() {
   const [wishlist, setWishlist] = useState([]);
 
@@ -22,12 +26,11 @@ export default function Home() {
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     );
   };
-
-  const featured = perfumes.slice(0, 4);
+  const { products: perfumes } = useProducts();
+  // const featured = perfumes.slice(0, 4);
 
   return (
-    <div className="min-h-screen bg-[#f3eadf] text-[#1a1a1a] font-sans selection:bg-[#1a1a1a] selection:text-white">
-      <Navbar variant="transparent" />
+    <div className="min-h-screen bg-[#f3eadf] text-[#1a1a1a]  selection:bg-[#1a1a1a] selection:text-white">
       <Hero />
 
       {/* ─── Brand Philosophy Strip ─── */}
@@ -73,71 +76,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-14">
-          {featured.map((perfume) => (
-            <div key={perfume.id} className="group">
-              {/* Card */}
-              <Link href={`/shop/${slugify(perfume.name)}`}>
-                <div className="relative aspect-[3/4] bg-[#fffcf9] border border-[#dccab8] rounded-2xl overflow-hidden shadow-sm transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1">
-                  {/* Image with gradient fallback */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#f7efe6] to-[#efe4d6]">
-                    <img
-                      src={perfume.image}
-                      alt={perfume.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                      }}
-                    />
-                  </div>
-
-                  {/* Wishlist */}
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toggleWishlist(perfume.id);
-                    }}
-                    className={`absolute top-4 right-4 p-2 rounded-full transition-all duration-300 z-10 ${
-                      wishlist.includes(perfume.id)
-                        ? "bg-[#1a1a1a] text-white"
-                        : "bg-white/80 text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white"
-                    }`}
-                  >
-                    <Heart
-                      size={14}
-                      fill={
-                        wishlist.includes(perfume.id) ? "currentColor" : "none"
-                      }
-                    />
-                  </button>
-
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6 pointer-events-none">
-                    <p className="text-white text-sm font-light italic leading-relaxed">
-                      &ldquo;{perfume.shortDesc}&rdquo;
-                    </p>
-                  </div>
-                </div>
-              </Link>
-
-              {/* Info */}
-              <div className="mt-5 text-center">
-                <p className="text-[10px] uppercase tracking-[0.3em] font-semibold opacity-35 mb-1">
-                  {perfume.note}
-                </p>
-                <Link
-                  href={`/shop/${slugify(perfume.name)}`}
-                  className="text-lg font-display font-bold hover:opacity-70 transition-opacity"
-                >
-                  {perfume.name}
-                </Link>
-                <p className="text-base font-light mt-1 opacity-60">
-                  ${perfume.price}.00
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+        <ShopSection/>
       </section>
 
       {/* ─── Editorial Story Block ─── */}
@@ -148,7 +87,7 @@ export default function Home() {
             <div className="relative overflow-hidden min-h-[420px] lg:min-h-[640px]">
               <div className="absolute inset-0 bg-gradient-to-br from-[#dccab8] to-[#cbb49e]">
                 <img
-                  src="/images/atelier.jpg"
+                  src="/avoire.jpg"
                   alt="The Avoire Atelier"
                   className="w-full h-full object-cover"
                   onError={(e) => {
@@ -241,7 +180,7 @@ export default function Home() {
             <div className="relative overflow-hidden min-h-[420px] lg:min-h-[640px] order-1 lg:order-2">
               <div className="absolute inset-0 bg-gradient-to-bl from-[#e6d7c8] to-[#cbb49e]">
                 <img
-                  src="/images/ingredients.jpg"
+                  src="/ingredients.jpg"
                   alt="Rare perfume ingredients"
                   className="w-full h-full object-cover"
                   onError={(e) => {
@@ -350,98 +289,146 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-14">
-          {perfumes.slice(4, 8).map((perfume) => (
-            <div key={perfume.id} className="group">
+          {perfumes.slice(2, 8).map((perfume) => (
+            <div key={perfume._id} className="group">
               <Link href={`/shop/${slugify(perfume.name)}`}>
                 <div className="relative aspect-[3/4] bg-[#fffcf9] border border-[#dccab8] rounded-2xl overflow-hidden shadow-sm transition-all duration-500 group-hover:shadow-xl group-hover:-translate-y-1">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#f7efe6] to-[#efe4d6]">
-                    <img
-                      src={perfume.image}
-                      alt={perfume.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      onError={(e) => {
-                        e.currentTarget.style.display = "none";
-                      }}
-                    />
-                  </div>
-
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      toggleWishlist(perfume.id);
-                    }}
-                    className={`absolute top-4 right-4 p-2 rounded-full transition-all duration-300 z-10 ${
-                      wishlist.includes(perfume.id)
-                        ? "bg-[#1a1a1a] text-white"
-                        : "bg-white/80 text-[#1a1a1a] hover:bg-[#1a1a1a] hover:text-white"
-                    }`}
-                  >
-                    <Heart
-                      size={14}
-                      fill={
-                        wishlist.includes(perfume.id) ? "currentColor" : "none"
-                      }
-                    />
-                  </button>
-
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6 pointer-events-none">
-                    <p className="text-white text-sm font-light italic leading-relaxed">
-                      &ldquo;{perfume.shortDesc}&rdquo;
-                    </p>
-                  </div>
+                  <img
+                    src={perfume.images[0]} // use first image from images array
+                    alt={perfume.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    onError={(e) => (e.currentTarget.style.display = "none")}
+                  />
                 </div>
               </Link>
-
-              <div className="mt-5 text-center">
-                <p className="text-[10px] uppercase tracking-[0.3em] font-semibold opacity-35 mb-1">
-                  {perfume.note}
-                </p>
-                <Link
-                  href={`/shop/${slugify(perfume.name)}`}
-                  className="text-lg font-display font-bold hover:opacity-70 transition-opacity"
-                >
-                  {perfume.name}
-                </Link>
-                <p className="text-base font-light mt-1 opacity-60">
-                  ${perfume.price}.00
-                </p>
-              </div>
             </div>
           ))}
         </div>
-      </section>
 
-      {/* ─── Newsletter CTA ─── */}
-      <section className="py-28 md:py-36 px-6 border-t border-[#dccab8]">
-        <div className="max-w-2xl mx-auto text-center space-y-8">
-          <h2 className="text-4xl md:text-5xl font-display leading-tight">
-            Join the <span className="italic font-normal">Atelier</span>
-          </h2>
+        {/* ─── The Avoire Circle (Last Section) ─── */}
+        <section className=" overflow-hidden py-24">
+          <div className="max-w-7xl mx-auto">
 
-          <p className="text-[#5a5a5a] font-light text-lg max-w-md mx-auto leading-relaxed">
-            Be first to discover limited editions, receive scent stories, and
-            access exclusive invitations.
-          </p>
+            {/* Header Section */}
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+              <div className="max-w-2xl space-y-6">
+                <span className="text-ui uppercase tracking-[0.3em] text-accent/60 font-medium">The Community</span>
+                <h2 className="text-headline-xl font-headline leading-[1.1] tracking-tight">
+                  Join <span className="italic font-light text-accent/80">The Avoire Circle</span>
+                </h2>
+                <p className="text-text-muted text-body font-light max-w-lg leading-relaxed">
+                  Experience the world of rare essences and luxury craftsmanship.
+                  Indulge in scents that tell a story and connect with a global
+                  community of connoisseurs.
+                </p>
+              </div>
 
-          <div className="relative max-w-md mx-auto pt-4">
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="w-full bg-transparent border-b-2 border-[#dccab8] py-4 pr-12 text-center font-light focus:outline-none focus:border-[#1a1a1a] transition-colors placeholder:text-[#9c8f84]"
-            />
-            <button
-              aria-label="Subscribe"
-              className="absolute right-0 bottom-4 p-1 hover:translate-x-1 transition-transform"
-            >
-              <ArrowRight size={20} className="text-[#1a1a1a]" />
-            </button>
+              <div className="hidden md:block">
+                <a
+                  href="/shop"
+                  className="group flex items-center gap-3 bg-accent text-text-inverse uppercase tracking-widest text-caption font-bold px-10 py-5 rounded-full transition-all hover:bg-accent-hover hover:-translate-y-1 shadow-xl"
+                >
+                  experience our fragrance
+                  <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+              </div>
+            </div>
+
+            {/* Premium Bento Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-6 gap-6 h-auto md:h-[800px]">
+
+              {/* Main Hero Visual (Top Left) */}
+              <div className="md:col-span-7 md:row-span-4 relative group overflow-hidden rounded-3xl border border-border-subtle shadow-sm">
+                <img
+                  src="https://i.pinimg.com/736x/e0/9e/0f/e09e0f26edaba87032bba2b31cce1203.jpg"
+                  alt="Artisanal Process"
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60" />
+                <div className="absolute bottom-8 left-8 text-white">
+                  <p className="text-caption uppercase tracking-[0.2em] font-medium opacity-80 mb-2">Heritage</p>
+                  <h3 className="text-headline font-headline italic">The Art of Extraction</h3>
+                </div>
+                <div className="absolute top-6 right-6">
+                  <Instagram className="text-white/80" size={20} />
+                </div>
+              </div>
+
+              {/* Testimonial 1 - Vogue (Top Right) */}
+              <div className="md:col-span-5 md:row-span-2 bg-bg-card p-10 flex flex-col justify-center rounded-3xl border border-border-subtle shadow-sm relative group hover:border-accent-secondary transition-colors">
+                <Quote className="text-accent-secondary/40 absolute top-8 right-8" size={40} />
+                <div className="space-y-4 relative z-10">
+                  <p className="text-headline-lg font-headline italic text-text-primary leading-tight">
+                    &ldquo;A masterclass in olfactory balance.&rdquo;
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <span className="h-[1px] w-8 bg-accent-secondary" />
+                    <p className="text-ui font-bold uppercase tracking-widest text-accent">Vogue Paris</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Social Detail (Center Right) */}
+              <div className="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-3xl border border-border-subtle shadow-sm">
+                <img
+                  src="https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=1000&auto=format&fit=crop"
+                  alt="Fragrance bottle"
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                />
+              </div>
+
+              {/* Secondary Testimonial - Le Monde (Bottom Left) */}
+              <div className="md:col-span-3 md:row-span-2 bg-accent text-text-inverse p-6 lg:p-8 flex flex-col justify-between rounded-3xl shadow-2xl">
+                <p className="text-sm font-light leading-relaxed italic opacity-90">
+                  "Respecting the slow-perfumery tradition while embracing modern nuances."
+                </p>
+                <p className="text-caption font-bold uppercase tracking-[0.2em]">Le Monde</p>
+              </div>
+
+              {/* Secondary Visual (Bottom Center) */}
+              <div className="md:col-span-4 md:row-span-2 relative group overflow-hidden rounded-3xl border border-border-subtle">
+                <img
+                  src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=1000&auto=format&fit=crop"
+                  alt="Floral ingredients"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-accent/20 mix-blend-multiply" />
+              </div>
+
+              {/* Engagement Card (Bottom Right) */}
+              <div className="md:col-span-5 md:row-span-2 bg-bg-subtle  p-6 lg:p-8 flex flex-col justify-center rounded-3xl border border-border-subtle relative overflow-hidden">
+                <div className="space-y-4">
+                  <h4 className="text-ui font-bold uppercase tracking-widest">Global Reach</h4>
+                  <p className="text-text-muted text-body-sm">Over 50,000 members across 40 countries sharing their olfactory journeys.</p>
+                  <div className="flex -space-x-3">
+                    {[1, 2, 3, 4].map(i => (
+                      <div key={i} className="w-10 h-10 rounded-full border-2 border-bg-subtle bg-accent-secondary flex items-center justify-center text-[10px] text-accent font-bold">
+                        AV
+                      </div>
+                    ))}
+                    <div className="w-10 h-10 rounded-full border-2 border-bg-subtle bg-white flex items-center justify-center text-[10px] text-accent font-bold italic">
+                      +4k
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Mobile CTA */}
+            <div className="mt-12 md:hidden flex justify-center">
+              <a
+                href="/subscribe"
+                className="w-full text-center bg-accent text-text-inverse uppercase tracking-widest text-caption font-bold px-8 py-5 rounded-full shadow-lg"
+              >
+                Join the Circle
+              </a>
+            </div>
           </div>
-
-          <p className="text-[10px] uppercase tracking-[0.2em] text-[#9c8f84] font-medium pt-2">
-            No spam, ever. Only the finest updates.
-          </p>
-        </div>
+        </section>
       </section>
+
+     
     </div>
   );
 }

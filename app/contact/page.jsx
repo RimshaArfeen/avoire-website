@@ -51,8 +51,7 @@ const App = () => {
      };
 
      return (
-          <div className={`min-h-screen ${colors.bg} selection:bg-[#1a1a1a] selection:text-white font-sans text-[#1a1a1a]`}>
-               <Navbar variant="solid" />
+          <div className={`min-h-screen ${colors.bg} selection:bg-[#1a1a1a] selection:text-white font-sans text-[#1a1a1a] py-24`}>
 
                <main className="max-w-7xl mx-auto px-6 pt-28 pb-12 md:pt-32 md:pb-20">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
