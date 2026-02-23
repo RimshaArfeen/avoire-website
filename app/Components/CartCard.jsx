@@ -2,9 +2,9 @@ import React from 'react'
 import Link from 'next/link'
 import { ArrowRight, ShieldCheck } from "lucide-react";
 
-const CartCard = ({ total, subtotal, shipping, cartItems }) => {
+const CartCard = ({ total, subtotal, shipping, cartItems, className }) => {
      return (
-          <div className=" w-full lg:w-[40%] sticky top-32">
+          <div className={`w-full sticky top-32 ${className || "lg:w-[40%]"}`}>
                <div className="bg-bg-card border border-border-default rounded-3xl p-8 shadow-sm">
                     <h3 className="text-caption font-bold tracking-[0.2em] uppercase text-text-primary mb-8 border-b border-border-subtle pb-4">
                          Order Summary

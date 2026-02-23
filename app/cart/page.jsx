@@ -137,6 +137,7 @@ const Page = () => {
                                         subtotal={subtotal.toFixed(2)}
                                         shipping={shipping.toFixed(2)}
                                         total={total.toFixed(2)}
+                                        className="lg:col-span-4"
                                    />
                          </div>
                          </>

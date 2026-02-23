@@ -1,45 +1,55 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { ShoppingBag, User, Menu, X, Search, ChevronRight, Heart } from 'lucide-react'; 
-import Link from 'next/link';
-import { useCart } from '@/app/context/CartContext';
-import { useWishlist } from '@/app/context/LikeContext';
+import React, { useState, useEffect } from "react";
+import {
+  ShoppingBag,
+  User,
+  Menu,
+  X,
+  Search,
+  ChevronRight,
+  Heart,
+} from "lucide-react";
+import Link from "next/link";
+import { useCart } from "@/app/context/CartContext";
+import { useWishlist } from "@/app/context/LikeContext";
 
 const MainNavbar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const { cartItems } = useCart();
   const { likedItems } = useWishlist();
-  const total_items = cartItems.reduce((total, item) => total + (item.qty || 0), 0);
+  const total_items = cartItems.reduce(
+    (total, item) => total + (item.qty || 0),
+    0,
+  );
   const total_liked_items = likedItems.length;
 
   const phrases = [
     "Elegance in Every Drop.",
     "Luxury You Can Smell.",
     "Avoire: Pure Sensation.",
-    "Scents That Inspire."
+    "Scents That Inspire.",
   ];
 
   const [index, setIndex] = useState(0);
-  const [fadeProp, setFadeProp] = useState('opacity-100');
+  const [fadeProp, setFadeProp] = useState("opacity-100");
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Shop', href: '/shop' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
+    { name: "Home", href: "/" },
+    { name: "Shop", href: "/shop" },
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
   ];
 
   useEffect(() => {
     const timeout = setInterval(() => {
-      setFadeProp('opacity-0');
+      setFadeProp("opacity-0");
       setTimeout(() => {
         setIndex((prevIndex) => (prevIndex + 1) % phrases.length);
-        setFadeProp('opacity-100');
+        setFadeProp("opacity-100");
       }, 500);
     }, 4000);
 
     return () => clearInterval(timeout);
   }, []);
-  
 
   const IconLink = ({ href, icon: Icon, label }) => (
     <Link
@@ -58,78 +68,85 @@ const MainNavbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-
 
   // useEffect(() => {
   //   document.body.style.overflow = isMobileMenuOpen ? "hidden" : "auto";
   // }, [isMobileMenuOpen]);
   return (
     <nav
-      className={`fixed ${isScrolled ? 'top-0' : 'top-[32px]'} left-0 w-full z-50 transition-all duration-500 ease-in-out  ${isScrolled
-        ? 'bg-white/80 md:backdrop-blur-md py-3 border-stone-200'
-        : 'bg-[#f3eadf] py-6 border border-b-[1px] '
-        }`}
+      className={`fixed ${isScrolled ? "top-0" : "top-[32px]"} left-0 w-full z-50 transition-all duration-500 ease-in-out  ${
+        isScrolled
+          ? "bg-white/80 md:backdrop-blur-md py-3 border-stone-200"
+          : "bg-[#f3eadf] py-6 border border-b-[1px] "
+      }`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between w-full">
         {/* Left: Desktop Links */}
-        <div className="hidden lg:flex items-center space-x-10">
-          
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-[12px] uppercase tracking-[0.15em] font-medium hover:text-stone-500 transition-colors duration-300 relative group"
-            >
-              {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-stone-400 transition-all duration-300 group-hover:w-full"></span>
-            </a>
-          ))}
-          <div className="relative group">
-            <span className="text-[12px] uppercase tracking-[0.15em] font-medium cursor-pointer">
-              Pages
-            </span>
+        <div className="flex-1 flex justify-start">
+          <div className="hidden lg:flex items-center space-x-10">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="text-[12px] uppercase tracking-[0.15em] font-medium hover:text-stone-500 transition-colors duration-300 relative group"
+              >
+                {link.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-stone-400 transition-all duration-300 group-hover:w-full"></span>
+              </a>
+            ))}
+            <div className="relative group">
+              <span className="text-[12px] uppercase tracking-[0.15em] font-medium cursor-pointer">
+                Pages
+              </span>
 
-            <div className="absolute left-0 top-6 w-44 bg-white border border-stone-200 shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300">
-              {[
-                { name: "Wishlist", href: "/wishlist" },
-                { name: "Cart", href: "/cart" },
-                { name: "Checkout", href: "/checkout" },
-                { name: "Account", href: "/account" }
-              ].map(item => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="block px-4 py-3 text-xs tracking-widest uppercase hover:bg-stone-50"
-                >
-                  {item.name}
-                </Link>
-              ))}
+              <div className="absolute left-0 top-6 w-44 bg-white border border-stone-200 shadow-xl opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300">
+                {[
+                  { name: "Wishlist", href: "/wishlist" },
+                  { name: "Cart", href: "/cart" },
+                  { name: "Checkout", href: "/checkout" },
+                  { name: "Account", href: "/account" },
+                ].map((item) => (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="block px-4 py-3 text-xs tracking-widest uppercase hover:bg-stone-50"
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>
 
         {/* Center: Logo */}
         <div className="flex-shrink-0">
-          <a href="#" className="flex flex-col items-center">
+          <Link href="/" className="flex flex-col items-center">
             <span className="text-[20px] md:text-4xl font-serif tracking-[0.3em] uppercase transition-all duration-500">
               Avoire
             </span>
-            <span className="text-[8px] tracking-[0.4em] uppercase opacity-60 mt-1">Perfume</span>
-          </a>
+            <span className="text-[8px] tracking-[0.4em] uppercase opacity-60 mt-1">
+              Perfume
+            </span>
+          </Link>
         </div>
 
         {/* Right: Icons */}
-        <div className="flex items-center  space-x-4 md:space-x-6">
-          
-          <a href="/account" className="p-1 hover:text-stone-500 transition-colors" aria-label="Account">
+        <div className="flex-1 flex items-center justify-end space-x-4 md:space-x-6">
+          <a
+            href="/account"
+            className="p-1 hover:text-stone-500 transition-colors"
+            aria-label="Account"
+          >
             <User size={20} strokeWidth={1.5} />
           </a>
-          <Link href="/wishlist" className="p-1 hover:text-stone-500 transition-colors relative">
+          <Link
+            href="/wishlist"
+            className="p-1 hover:text-stone-500 transition-colors relative"
+          >
             <Heart size={20} strokeWidth={1.5} />
             {total_liked_items > 0 && (
               <span className="absolute -top-1 -right-1 bg-stone-800 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center">
@@ -137,7 +154,11 @@ const MainNavbar = () => {
               </span>
             )}
           </Link>
-          <a href="/cart" className="p-1 hover:text-stone-500 transition-colors relative" aria-label="Cart">
+          <a
+            href="/cart"
+            className="p-1 hover:text-stone-500 transition-colors relative"
+            aria-label="Cart"
+          >
             <ShoppingBag size={20} strokeWidth={1.5} />
             <span className="absolute -top-1 -right-1 bg-stone-800 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center">
               {total_items}
@@ -155,8 +176,9 @@ const MainNavbar = () => {
       </div>
       {/* Mobile Sidebar Overlay */}
       <div
-        className={`fixed inset-0 z-[100] bg-accent/20 backdrop-blur-sm transition-opacity duration-500 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-          }`}
+        className={`fixed inset-0 z-[100] bg-accent/20 backdrop-blur-sm transition-opacity duration-500 ${
+          isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
         onClick={() => setIsMobileMenuOpen(false)}
       />
 
@@ -165,18 +187,19 @@ const MainNavbar = () => {
         className={`fixed top-0 right-0 h-full w-[85%] max-w-[400px]
   bg-bg-page backdrop-blur-none
   z-[101] shadow-2xl transition-transform duration-500 ease-in-out
-  ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}` }
+  ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="p-8 h-full flex flex-col">
           <div className="flex justify-between items-center mb-16">
-            <span className="text-xl font-headline tracking-widest uppercase">Avoire</span>
+            <span className="text-xl font-headline tracking-widest uppercase">
+              Avoire
+            </span>
             <button onClick={() => setIsMobileMenuOpen(false)} className="p-2">
               <X size={24} strokeWidth={1} />
             </button>
           </div>
 
           <nav className="flex flex-col space-y-8">
-           
             {navLinks.map((link) => (
               <a
                 key={link.name}
@@ -184,18 +207,23 @@ const MainNavbar = () => {
                 className="flex items-center justify-between text-2xl font-headline border-b border-border-subtle pb-4 group"
               >
                 <span>{link.name}</span>
-                <ChevronRight size={18} className="text-text-disabled group-hover:translate-x-1 transition-transform" />
+                <ChevronRight
+                  size={18}
+                  className="text-text-disabled group-hover:translate-x-1 transition-transform"
+                />
               </a>
             ))}
             <div className="pt-6">
-              <p className="text-2xl uppercase tracking-widest text-text-disabled mb-4">Pages</p>
+              <p className="text-2xl uppercase tracking-widest text-text-disabled mb-4">
+                Pages
+              </p>
 
               {[
                 { name: "Wishlist", href: "/wishlist" },
                 { name: "Cart", href: "/cart" },
                 { name: "Checkout", href: "/checkout" },
-                { name: "Account", href: "/account" }
-              ].map(link => (
+                { name: "Account", href: "/account" },
+              ].map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
@@ -206,15 +234,23 @@ const MainNavbar = () => {
                 </a>
               ))}
             </div>
-            <a href="#" className="flex items-center justify-between text-2xl font-headline border-b border-border-subtle pb-4 group">
+            <a
+              href="#"
+              className="flex items-center justify-between text-2xl font-headline border-b border-border-subtle pb-4 group"
+            >
               <span>Account</span>
-              <ChevronRight size={18} className="text-text-disabled group-hover:translate-x-1 transition-transform" />
+              <ChevronRight
+                size={18}
+                className="text-text-disabled group-hover:translate-x-1 transition-transform"
+              />
             </a>
           </nav>
 
           <div className="mt-auto pb-8">
             <div className="p-6 bg-bg-subtle rounded-lg">
-              <p className="text-[10px] uppercase tracking-widest text-text-muted mb-4 text-center font-medium">Join the Avoire Circle</p>
+              <p className="text-[10px] uppercase tracking-widest text-text-muted mb-4 text-center font-medium">
+                Join the Avoire Circle
+              </p>
               <div className="flex shadow-sm">
                 <input
                   type="email"
@@ -230,7 +266,7 @@ const MainNavbar = () => {
         </div>
       </aside>
     </nav>
-    
+
     // <nav
     //   aria-label="Main navigation and search"
     //   className="w-full px-4 py-3 sm:px-6 lg:px-8 bg-primary"
