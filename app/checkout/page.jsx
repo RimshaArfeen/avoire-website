@@ -23,10 +23,9 @@ import Swal from "sweetalert2";
 
 // ─── Bank Details (Update these with your real info) ───
 const BANK_DETAILS = {
-  accountTitle: "Your Account Title",
-  accountNumber: "1234-5678-9012-3456",
-  bankName: "Your Bank Name",
-  iban: "PK00XXXXXXXXXXXXXXXXXXX",
+  accountTitle: "RAZI SHOAIB",
+  accountNumber: "03128555929",
+  bankName: "Easypaisa",,
 };
 
 // ─── Step Indicator (outside component to prevent re-render) ───
